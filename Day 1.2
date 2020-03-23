@@ -1,1 +1,46 @@
+// Created on Sun March 22 2020
 
+int l_motor = 0;  // left motor
+int r_motor = 2; 	// right motor
+int speed = 30;  // motor speed
+int l_touch = 8; // left touch sensor
+int r_touch = 9;	// right touch sensor
+int l_reflect = 5;	// left reflectance sensor
+
+int main()
+{
+	adjust();		// intial adjustment turn
+    while(digital(l_touch) == 0) {   // while loop that makes the bot move forward until the left touch sensor is activated    
+      forward();					
+      if(analog(l_reflect) > 0) {      // if statement that makes the bot veer right when the left reflectance sensor picks up the line 
+         veerRight();
+	  }
+	  if(digital(r_touch) > 0) {	// if statement that makes the bot veer left when the right touch sensor is activated by the wall
+		 veerLeft();
+	
+  }
+            }
+		}
+
+//Functions
+
+void adjust(){                	// intial adjustment turn, lasts for 750 milliseconds
+    motor (l_motor, speed);   
+    motor (r_motor, -speed); 
+	msleep(750);
+}
+
+void forward(){              // both motors move at a speed of 30, making the bot move forward
+    motor (l_motor, speed);  
+    motor (r_motor, speed);
+}
+
+void veerRight(){               // right motor's speed is 15 less than the left motor, making the bot veer right
+    motor (l_motor, speed);
+    motor (r_motor, speed-15);
+}
+
+void veerLeft(){				// left motor's speed is 15 less than the right motor, making the bot veer left
+    motor (l_motor, speed-15);
+    motor (r_motor, speed);
+}
