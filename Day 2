@@ -1,0 +1,41 @@
+// Created on Mon March 23 2020
+
+int l_motor = 0;  // left motor is port 0
+int r_motor = 2;  // right motor is port 2
+int speed = 30;	  // motor speed is 30
+int r_touch = 9;  // right touch sensor is port 9
+int l_reflect = 5;	// left reflectance sensor is port 5
+
+int main(){
+	adjust();		// intial adjustment turn, repositions the robot
+while(digital(r_touch) == 0) {  	// the bot moves forward until the right touch sensor hits the far wall
+    forward();                   
+  if(analog(l_reflect) > 0) {    // if the bot is too far to the left and picks up the tape, the if statement makes it veer right
+    veerRight();
+}
+  }
+    finalTurn();			// final adjustment turn
+     
+  }
+// Functions
+void forward() {            		// both motors moving forward at the same speed
+    motor(l_motor, speed);  
+    motor(r_motor, speed);
+}
+void adjust() {                // intial adjustment turn
+    motor(l_motor, speed);    
+    motor(r_motor, -speed); 
+	msleep(500);
+}
+void veerRight(){
+	motor(l_motor, speed);     // right veer, right motor at 15 less speed than left motor
+	motor(r_motor, speed-15);
+}
+void finalTurn(){				// final turn, bot backs up slightly, then turns to face the tape
+	motor(l_motor,-speed);
+	motor(r_motor,-speed);
+	msleep(400);
+	motor(l_motor,-speed);
+	motor(r_motor,speed);
+	msleep(1300);
+}
