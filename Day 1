@@ -1,1 +1,32 @@
+// Created on Thu March 19 2020
 
+int l_motor = 0;  // variables
+int r_motor = 2;
+int speed = 20;  // speed of the robot
+int counter = 0; // counter
+int main()
+{
+    while(counter == 0) {  // used a counter to stop moving forward once the right bump sensor is activated
+        forward();         // goes forward until the counter is greater than 0
+        if(digital(9) == 1) {      // if the right bump sensor is activated, rotate
+            rotate();
+			backward();				// the robot moves backward while rotating to perfectly line up with the wall
+            if(digital(8) == 1) { // if the right bump sensor is activated and then the left bump sensor is activated,
+                counter ++;            // add one to the counter, making it exit the while loop and stop moving
+                }
+            }
+        }
+    }
+// Functions
+void forward() {            // forward function
+    motor(l_motor, speed);  // left and right motors go at full speed
+    motor(r_motor, speed);
+}
+void rotate() {                // rotate function
+    motor(l_motor, speed);    // left motor goes at full speed
+    motor(r_motor, -speed); // right motor goes backward at full speed, turning the robot
+}
+void backward(){
+	motor(l_motor, -speed);
+	motor(r_motor, -speed);
+}
