@@ -1,0 +1,59 @@
+int main(){
+adjust();				// first adjustment turn
+while(counter < 5){			// while counter is less than 5 (for some reason counter tracks twice at third line)
+		forward();		// move forward
+	if(b==1){			// if b is equal to 1, which it is set to
+	if(analog(r_reflect) > 0) {		// and if right reflectance picks up the line, 
+                printf("counter");
+                counter++;			// add one to counter, 
+                b = 0;				// set b back equal to 0, stopping it from counting again until it leaves the black line
+            }
+		}
+        else if (analog(r_reflect) == 0){		// if right reflectance is equal to 0, b is back equal to 1, making it loop through over and over to check if it's on the line
+            b = 1;
+        }
+
+ if(analog(r_range) > 250) {    			// if it is far from the wall, move right
+    veerRight();
+	 if(analog(m_range) < 300){			// if it is far from the wall to the right and close to wall in front of it, hard right
+		 hardRight();
+	 }
+  }
+if(analog(r_range) < 250) {				// if it is close to the right wall and to a wall in front of it, hard left
+	veerLeft();
+	if(analog(m_range) < 300) {
+		hardLeft();
+}
+}
+   }
+   while(digital(l_touch) == 1) { 		// once the bot leaves the first while loop when counter = 5, move forward until the wall is touched, making it park correctly
+	   forward();
+   }
+   }
+// Functions
+void forward() {            			
+    motor(l_motor, speed);  
+    motor(r_motor, speed);
+}
+void adjust() {               			 
+    motor(l_motor, speed);    		
+    motor(r_motor, -speed); 
+	msleep(600);
+}
+void veerRight(){
+	motor(l_motor, speed+70);    			 
+	motor(r_motor, speed-30);
+}
+void veerLeft(){
+	motor(l_motor, speed-30);  		   
+	motor(r_motor, speed+70);
+}
+void hardLeft(){
+	motor(r_motor, speed+70);
+	motor(l_motor, speed-130);
+}
+void hardRight(){
+	motor(l_motor, speed+70);
+	motor(r_motor, speed-130);
+}
+
