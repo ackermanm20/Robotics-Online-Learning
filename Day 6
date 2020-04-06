@@ -1,0 +1,26 @@
+// Created on Mon April 6 2020
+
+int l_motor = 0;  // left motor
+int r_motor = 2; // right motor
+int speed = 30;
+
+int main()
+{
+	int b;
+for(int b = 1; b <= 6; b++){
+	forward();
+	backward();
+	printf("int b is equal to %d", b);
+}
+}
+void forward() {            
+    motor (l_motor, speed);  
+    motor (r_motor, speed);
+	msleep(200);
+}
+
+void backward() {
+    motor (l_motor, -speed);
+    motor (r_motor, -speed);
+	msleep(200);
+}
